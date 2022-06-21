@@ -1,8 +1,17 @@
 import express from "express";
+import { db } from "./config/index.js";
 import { authRouter } from './routes/index.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Conectando la BD
+try {
+    await db.authenticate()
+    console.log("Conexión correcta a la base de datos")
+} catch(error) {
+    console.error(`Error conectando a la base de datos ${error}`)
+}
 
 // Habilitando Pug
 app.set("view engine", "pug");
