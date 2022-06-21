@@ -1,3 +1,5 @@
+import { User } from "../models/index.js"
+
 export const handleLogin = (req, res) => {
 	// Podemos pasar parametros hacia las vistas proporcionando un objeto como segundo parametro de la función render
 	res.render("auth/login", {
@@ -16,3 +18,9 @@ export const handleRegister = (req, res) => {
 		title: "Crea tu cuenta",
 	});
 };
+
+export const handleRegisterSubmit = async (req, res) => {
+	const user = await User.create(req.body);
+
+	res.json(user);
+}
