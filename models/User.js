@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt"
 import { DataTypes } from "sequelize";
 import { db } from "../config/index.js";
 
@@ -19,5 +20,16 @@ export const User = db.define("users", {
     },
     confirmed: {
         type: DataTypes.BOOLEAN
+    }
+}, {
+    hooks: {
+        // Antes de crear la instancia
+        beforeCreate: async (user) => {
+            /* 
+                Realiza 10 rondas de hasheo. 
+                No es recomendado poner un mayor número debido a que es un proceso costoso. 
+            */
+            user.password = await bcrypt.hash(user.password, await bcrypt.genSalt(10));
+        }
     }
 });

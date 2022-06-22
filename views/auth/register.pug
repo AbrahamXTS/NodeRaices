@@ -9,19 +9,25 @@ block content
             a(href="/auth/login" class="text-indigo-600 hover:text-indigo-500") Inicia sesión
 
         div.mt-8.mx-auto.max-w-md
+            if validations 
+                each validation in validations 
+                    div.mb-2.p-2.border-2.border-red-600.bg-red-500.text-center.text-white.text-xs.font-bold= validation.msg
+
             div.bg-white.py-8.px-4.shadow
                 form.space-y-5(method="POST", action="/auth/register")
+                    //- Token obligatorio para pasar la validación de CSRF
+                    input(type="hidden" name="_csrf" value= csrf)
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="name") Nombre
-                        input#name.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingresa tu nombre" type="text" name="name")
+                        input#name(class=`w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400` placeholder="Ingresa tu nombre" type="text" name="name" value= answers ? answers.name : "")
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="email") Email
-                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingresa tu email" type="email" name="email")
+                        input#email(class=`w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400` placeholder="Ingresa tu email" type="email" name="email" value= answers ? answers.email : "")
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="password") Contraseña
-                        input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingresa tu contraseña" type="password" name="password")
+                        input#password(class=`w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400` placeholder="Ingresa tu contraseña" type="password" name="password" value= answers ? answers.password : "")
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="verification") Confirma tu contraseña
-                        input#verification.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Confirma tu contraseña" type="password" name="verification")
+                        input#verification(class=`w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400` placeholder="Confirma tu contraseña" type="password" name="verification")
                     
                     input(class="w-full text-white font-bold py-2.5 uppercase cursor-pointer bg-indigo-600 hover:bg-indigo-700" type="submit" value="Crear cuenta")
