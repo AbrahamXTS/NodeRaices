@@ -11,3 +11,8 @@ export function generateJWT(payload) {
 
     return token;
 }
+
+export function validateJWT(token) {
+    
+    return jwt.verify(token, process.env.JWT_SECRET)
+}
