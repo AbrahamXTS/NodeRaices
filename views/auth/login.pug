@@ -9,8 +9,14 @@ block content
             a(href="/auth/register" class="text-indigo-600 hover:text-indigo-500") Registrate
 
         div.mt-8.mx-auto.max-w-md
+            if validations 
+                each validation in validations 
+                    div.mb-2.p-2.border-2.border-red-600.bg-red-500.text-center.text-white.text-xs.font-bold= validation.msg
+
+        div.mt-8.mx-auto.max-w-md
             div.bg-white.py-8.px-4.shadow
-                form.space-y-5
+                form.space-y-5(method="POST" action="/auth/login")
+                    input(type="hidden" name="_csrf" value= csrf)
                     div
                         label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="email") Email
                         input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Ingresa tu email" type="email" name="email")

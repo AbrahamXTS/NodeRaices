@@ -33,3 +33,7 @@ export const User = db.define("users", {
         }
     }
 });
+
+User.prototype.checkPassword = function (password) {
+    return bcrypt.compareSync(password, this.password)
+}
